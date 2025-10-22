@@ -15,8 +15,8 @@ with MPRester("WBDGk31i0QdCZVmz") as m:
     mp_entries = m.get_entries_in_chemsys(["Li"])
     docs = m.summary.search(elements=["Si", "O"],  band_gap=(0.5, 1.0), fields=["material_id",  "band_gap",  "volume", "formula_pretty"])
 '''    
-#OLD API KEY: WBDGk31i0QdCZVmz
-#NEW API KEY: 5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj
+#OLD API KEY: 
+#NEW API KEY: 
 import numpy as np
 from collections import OrderedDict
 from pymatgen.io.vasp.sets import Vasprun
@@ -38,13 +38,13 @@ vasprun_Li3InCl6 = Vasprun("vasprun-LPSCl.xml")
 vasp_entry_Li3InCl6 = vasprun_Li3InCl6.get_computed_entry(inc_structure=True)
 compatibility = MaterialsProjectCompatibility() 
 Li3InCl6_entry = compatibility.process_entry(vasp_entry_Li3InCl6)
-with MPRester("5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj") as rester:
+with MPRester("") as rester:
     LIC_entries = rester.get_entries_in_chemsys(['Li', 'P', 'S', 'Cl'])
 
 LIC_struc = Structure.from_file("LPSCl.cif")
 LIC_comp = LIC_struc.composition.reduced_formula
 #%% Download the structures that contain Li element in Materials Project and relax the structures
-with MPRester("5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj") as mpr: 
+with MPRester("") as mpr: 
     docs = mpr.summary.search(elements=["Li"], energy_above_hull=(0, 0.035), formation_energy=(-1000, 0), fields=["material_id", "volume", "formula_pretty", "energy_above_hull", "formation_energy_per_atom", "chemsys", "composition"])
     #docs = mpr.summary.search(elements=["Li"], energy_above_hull=(0, 0.035), fields=["material_id", "volume", "formula_pretty", "energy_above_hull", "formation_energy_per_atom", "chemsys", "composition"])
 num = len(docs)
@@ -62,7 +62,7 @@ for n in range(num):
     if formula == str('Li'):
         continue
     else:    
-        with MPRester("5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj") as mpr: 
+        with MPRester("") as mpr: 
             structure = mpr.get_structure_by_material_id(str(example_doc.material_id))
         
         #example_doc.fields_not_requested # list of unrequested fields
@@ -82,7 +82,7 @@ for n in range(num):
             element = chemical_system.split('-')[i]
             chem_sys.append(element)
         
-        with MPRester("5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj") as rester:
+        with MPRester("") as rester:
             mp_entries = rester.get_entries_in_chemsys(chem_sys)
         
         compatibility = MaterialsProjectCompatibility()
@@ -134,14 +134,14 @@ for n in range(num):
             print(energy)
             
             #%%计算与LIC反应能
-            mpr = MPRester('5we9cnJa3XVOHuXzwqgXqVbZAdxCXlLj')
+            mpr = MPRester('')
 
             reactant1 = 'Li6PS5Cl'
             reactant2 = formula
             grand = True
             if grand:
                open_el = 'P' 
-               relative_mu = -1 #不要轻易改这个数值，反应会出偏差
+               relative_mu = -1 
 
             comp1 = Composition(reactant1)
             comp2 = Composition(reactant2)
