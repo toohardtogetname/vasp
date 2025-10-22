@@ -16,7 +16,7 @@ from pymatgen.io.vasp import Vasprun
 from pymatgen.core.periodic_table import Element
 
 #This initializes the REST adaptor. Put your own API key in if necessary.
-a = MPRester('tLf90ZQdzmWJelG4')
+a = MPRester('')
 compatibility = MaterialsProjectCompatibility()
 #%%
 #This gets all entries belonging to the system.
